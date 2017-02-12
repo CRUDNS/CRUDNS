@@ -57,9 +57,9 @@ TEMPLATES = [
     },
 ]
 
-ROOT_URLCONF = 'djangoreactredux.urls'
+ROOT_URLCONF = 'crudns.urls'
 
-WSGI_APPLICATION = 'djangoreactredux.wsgi.application'
+WSGI_APPLICATION = 'crudns.wsgi.application'
 
 LANGUAGE_CODE = 'en-us'
 
