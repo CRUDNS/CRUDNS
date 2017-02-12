@@ -111,7 +111,7 @@ class DnsRecord(models.Model):
 
     def __str__(self):
         """
-        Unicode representation for an dns record model.
+        Unicode representation for an dns_record record model.
 
         :return: string
         """

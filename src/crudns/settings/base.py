@@ -27,7 +27,7 @@ INSTALLED_APPS = (
 
     'accounts',
     'base',
-    'dns'
+    'dns_record'
 )
 
 MIDDLEWARE_CLASSES = (
