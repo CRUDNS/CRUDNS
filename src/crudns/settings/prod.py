@@ -1,15 +1,19 @@
 from djangoreactredux.settings.base import *  # NOQA (ignore all errors on this line)
 
 
-DEBUG = True
+DEBUG = False
+TEMPLATE_DEBUG = DEBUG
 
-PAGE_CACHE_SECONDS = 1
+PAGE_CACHE_SECONDS = 60
+
+# TODO: n a real production server this should have a proper url
+ALLOWED_HOSTS = ['*']
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'djangoreactredux_dev',
-        'USER': 'djangoreactredux',
+        'NAME': 'djangoreactredux_prod',
+        'USER': 'crudns',
         'PASSWORD': 'password',
         'HOST': 'postgres',
         'PORT': 5432,
@@ -18,12 +22,25 @@ DATABASES = {
 
 REST_FRAMEWORK['EXCEPTION_HANDLER'] = 'django_rest_logger.handlers.rest_exception_handler'  # NOQA (ignore all errors on this line)
 
+# ########### Sentry configuration
+
+# Change this to proper sentry url.
+RAVEN_CONFIG = {
+    'dsn': '',
+}
+
+INSTALLED_APPS = INSTALLED_APPS + (  # NOQA (ignore all errors on this line)
+    'raven.contrib.django.raven_compat',
+)
+
+# ####### Logging
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
     'root': {
-        'level': 'DEBUG',
-        'handlers': ['django_rest_logger_handler'],
+        'level': 'WARNING',
+        'handlers': ['sentry'],
     },
     'formatters': {
         'verbose': {
@@ -32,7 +49,11 @@ LOGGING = {
         },
     },
     'handlers': {
-        'django_rest_logger_handler': {
+        'sentry': {
+            'level': 'ERROR',
+            'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+        },
+        'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
@@ -41,18 +62,23 @@ LOGGING = {
     'loggers': {
         'django.db.backends': {
             'level': 'ERROR',
-            'handlers': ['django_rest_logger_handler'],
+            'handlers': ['console'],
             'propagate': False,
         },
-        'django_rest_logger': {
+        'raven': {
             'level': 'DEBUG',
-            'handlers': ['django_rest_logger_handler'],
+            'handlers': ['sentry'],
+            'propagate': False,
+        },
+        'sentry.errors': {
+            'level': 'DEBUG',
+            'handlers': ['sentry'],
             'propagate': False,
         },
     },
 }
 
-DEFAULT_LOGGER = 'django_rest_logger'
+DEFAULT_LOGGER = 'raven'
 
 LOGGER_EXCEPTION = DEFAULT_LOGGER
 LOGGER_ERROR = DEFAULT_LOGGER
