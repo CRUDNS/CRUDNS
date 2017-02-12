@@ -25,3 +25,8 @@ services:
             dockerfile: ./docker/web/Dockerfile
         volumes:
             - .:/django
+    bind:
+        restart: always
+        build:
+            context: .
+            dockerfile: ./docker/bind/Dockerfile

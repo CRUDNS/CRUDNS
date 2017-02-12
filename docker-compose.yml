@@ -37,3 +37,13 @@ services:
             - backend
         entrypoint:
             - /web-entrypoint.sh
+    dns:
+        extends:
+            file: docker-common.yml
+            service: bind
+        links:
+            - postgres
+        entrypoint:
+            - /bind-entrypoint.sh
+        ports:
+            - 53:53
