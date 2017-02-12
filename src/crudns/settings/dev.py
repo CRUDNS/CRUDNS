@@ -1,4 +1,4 @@
-from djangoreactredux.settings.base import *  # NOQA (ignore all errors on this line)
+from crudns.settings.base import *  # NOQA (ignore all errors on this line)
 
 
 DEBUG = True
@@ -8,7 +8,7 @@ PAGE_CACHE_SECONDS = 1
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'djangoreactredux_dev',
+        'NAME': 'crudns_dev',
         'USER': 'crudns',
         'PASSWORD': 'password',
         'HOST': 'postgres',

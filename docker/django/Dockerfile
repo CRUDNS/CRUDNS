@@ -1,5 +1,5 @@
 FROM python:3.4.3
-MAINTAINER Filipe Garcia <filipe.garcia@seedstarslabs.com>
+MAINTAINER Prabod Rathnayaka <prabod@rathnayaka.me>
 
 ENV PYTHONUNBUFFERED 1
 
