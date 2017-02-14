@@ -10,7 +10,10 @@ import {
 
 export function registerUserSuccess() {
     return {
-        type: REGISTER_USER_SUCCESS
+        type: REGISTER_USER_SUCCESS,
+        payload: {
+            statusText: 'You Have Successfully Registered.!!'
+        }
     };
 }
 
@@ -30,10 +33,9 @@ export function registerUserRequest() {
     };
 }
 
-export function registerUser(first_name, last_name, email, password, redirect = '/login') {
+export function registerUser(userName, firstName, lastName, Email, pwrd, redirect = '/login') {
     return (dispatch) => {
         dispatch(registerUserRequest());
-        const auth = btoa(`${email}:${password}`);
         return fetch(`${SERVER_URL}/api/v1/accounts/register/`, {
             method: 'post',
             headers: {
@@ -41,16 +43,16 @@ export function registerUser(first_name, last_name, email, password, redirect = 
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                'email': email,
-                'first_name': first_name,
-                'last_name': last_name,
-                'password': password
+                email: Email,
+                username: userName,
+                first_name: firstName,
+                last_name: lastName,
+                password: pwrd
             })
         })
             .then(checkHttpStatus)
             .then(parseJSON)
             .then((response) => {
-                console.log(response);
                 dispatch(registerUserSuccess());
                 dispatch(push(redirect));
             })
