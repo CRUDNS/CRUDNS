@@ -1,8 +1,8 @@
 import React from 'react';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
-import {push} from 'react-router-redux';
+import { push } from 'react-router-redux';
 import t from 'tcomb-form';
 
 import * as actionCreators from '../../actions/register';
@@ -10,6 +10,7 @@ import * as actionCreators from '../../actions/register';
 const Form = t.form.Form;
 
 const Register = t.struct({
+    user_name: t.String,
     first_name: t.String,
     last_name: t.String,
     email: t.String,
@@ -37,6 +38,7 @@ class RegisterView extends React.Component {
         isRegistering: React.PropTypes.bool.isRequired,
         isRegistered: React.PropTypes.bool.isRequired,
         isFailure: React.PropTypes.bool.isRequired,
+        isAuthenticated: React.PropTypes.bool.isRequired,
         statusText: React.PropTypes.string,
         actions: React.PropTypes.shape({
             registerUser: React.PropTypes.func.isRequired
@@ -65,28 +67,32 @@ class RegisterView extends React.Component {
     componentWillMount() {
         if (this.props.isAuthenticated) {
             this.props.dispatch(push('/'));
+        } else if (this.props.isRegistered) {
+            this.props.dispatch(push('/login'));
         }
     }
 
     onFormChange = (value) => {
-        this.setState({formValues: value});
+        this.setState({ formValues: value });
     };
 
     register = (e) => {
         e.preventDefault();
         const value = this.registerForm.getValue();
         if (value) {
-            this.props.actions.registerUser(value.first_name, value.last_name, value.email, value.password, this.state.redirectTo);
+            this.props.actions.registerUser(value.user_name, value.first_name, value.last_name, value.email,
+                value.password, this.state.redirectTo);
         }
     };
 
     render() {
         let statusText = null;
+        let submitText = 'Submit';
         if (this.props.statusText) {
             const statusTextClassNames = classNames({
                 'alert': true,
-                'alert-danger': this.props.statusText.indexOf('Authentication Error') === 0,
-                'alert-success': this.props.statusText.indexOf('Authentication Error') !== 0
+                'alert-danger': this.props.statusText.indexOf('You Have Successfully Registered.!!') === 0,
+                'alert-success': this.props.statusText.indexOf('You Have Successfully Registered.!!') !== 0
             });
 
             statusText = (
@@ -99,7 +105,9 @@ class RegisterView extends React.Component {
                 </div>
             );
         }
-
+        if (this.props.isFailure) {
+            submitText = 'Retry';
+        }
         return (
             <div className="container login">
                 <h1 className="text-center">Register</h1>
@@ -118,7 +126,7 @@ class RegisterView extends React.Component {
                                 type="submit"
                                 className="btn btn-default btn-block"
                         >
-                            Submit
+                            {submitText}
                         </button>
                     </form>
                 </div>
@@ -145,4 +153,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterView);
-export {RegisterView as LoginViewNotConnected};
+export { RegisterView as LoginViewNotConnected };

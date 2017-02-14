@@ -1,4 +1,4 @@
-import {createReducer} from '../utils';
+import { createReducer } from '../utils';
 import {
     REGISTER_USER_REQUEST,
     REGISTER_USER_SUCCESS,
