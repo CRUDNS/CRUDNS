@@ -28,6 +28,10 @@ class App extends React.Component {
         this.props.dispatch(push('/protected'));
     };
 
+    goToDashboard = () => {
+        this.props.dispatch(push('/dashboard'));
+    };
+
     render() {
         const homeClass = classNames({
             active: this.props.pathName === '/'
@@ -40,6 +44,9 @@ class App extends React.Component {
         });
         const registerClass = classNames({
             active: this.props.pathName === '/register'
+        });
+        const dashboardClass = classNames({
+            active: this.props.pathName === '/dashboard'
         });
 
         return (
@@ -76,6 +83,14 @@ class App extends React.Component {
                                            onClick={this.goToProtected}
                                         >
                                             <i className="fa fa-lock"/> Protected
+                                        </a>
+                                    </li>
+                                    <li className={dashboardClass}>
+                                        <a className="js-go-to-dashboard-button"
+                                           tabIndex="0"
+                                           onClick={this.goToDashboard}
+                                        >
+                                            <i className="fa fa-tachometer"/> Dashboard
                                         </a>
                                     </li>
                                     <li>

@@ -19,7 +19,7 @@ describe('Data Actions:', () => {
         localStorage.removeItem('token');
     });
 
-    it('dataReceiveProtectedData should create DATA_RECEIVE_PROTECTED_DATA action', () => {
+    it('dataReceiveDomainData should create DATA_RECEIVE_PROTECTED_DATA action', () => {
         expect(ACTIONS_DATA.dataReceiveProtectedData('data')).to.eql({
             type: TYPES.DATA_RECEIVE_PROTECTED_DATA,
             payload: {
@@ -28,13 +28,13 @@ describe('Data Actions:', () => {
         });
     });
 
-    it('dataFetchProtectedDataRequest should create FETCH_PROTECTED_DATA_REQUEST action', () => {
+    it('dataFetchDomainDataRequest should create FETCH_PROTECTED_DATA_REQUEST action', () => {
         expect(ACTIONS_DATA.dataFetchProtectedDataRequest()).to.eql({
             type: TYPES.DATA_FETCH_PROTECTED_DATA_REQUEST
         });
     });
 
-    it('dataFetchProtectedDataRequest should create DATA_RECEIVE_PROTECTED_DATA actions ' +
+    it('dataFetchDomainDataRequest should create DATA_RECEIVE_PROTECTED_DATA actions ' +
         'when API returns 200', (done) => {
         const expectedActions = [
             {
@@ -63,7 +63,7 @@ describe('Data Actions:', () => {
             }).then(done).catch(done);
     });
 
-    it('dataFetchProtectedDataRequest should create authLogout and pushState actions when API returns 401', (done) => {
+    it('dataFetchDomainDataRequest should create authLogout and pushState actions when API returns 401', (done) => {
         const expectedActions = [
             {
                 type: TYPES.DATA_FETCH_PROTECTED_DATA_REQUEST
@@ -98,7 +98,7 @@ describe('Data Actions:', () => {
             }).then(done).catch(done);
     });
 
-    it('dataFetchProtectedDataRequest should create authLogout and pushState actions when API returns 500', (done) => {
+    it('dataFetchDomainDataRequest should create authLogout and pushState actions when API returns 500', (done) => {
         const expectedActions = [
             {
                 type: TYPES.DATA_FETCH_PROTECTED_DATA_REQUEST
@@ -133,7 +133,7 @@ describe('Data Actions:', () => {
             }).then(done).catch(done);
     });
 
-    it('dataFetchProtectedDataRequest should create authLogout and pushState actions when API ' +
+    it('dataFetchDomainDataRequest should create authLogout and pushState actions when API ' +
         'has no response', (done) => {
         const expectedActions = [
             {

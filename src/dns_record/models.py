@@ -101,8 +101,8 @@ class DnsRecord(models.Model):
         blank=True
     )
 
-    user = models.ForeignKey(
-        'accounts.User',
+    domain = models.ForeignKey(
+        'Domain',
         on_delete=models.CASCADE
     )
 
@@ -115,4 +115,36 @@ class DnsRecord(models.Model):
 
         :return: string
         """
-        return self.zone + '\t' + self.ttl + '\t' + self.type + '\t' + self.host
+        return self.zone + '\t' + str(self.ttl) + '\t' + self.type + '\t' + self.host
+
+
+class Domain(models.Model):
+    """
+    Model that represent a domain that owned by a User
+
+    """
+    domain = models.CharField(
+        _('Domain Name'),
+        help_text=_('Required. Domain Name'),
+        max_length=255
+    )
+
+    status = models.BooleanField(
+        _('Status of the Domain'),
+        help_text=_('Whether Domains NS record points to our NS'),
+        default=False,
+        blank=True
+    )
+
+    user = models.ForeignKey(
+        'accounts.User',
+        on_delete=models.CASCADE,
+        blank=True
+    )
+
+    def __str__(self):
+        """
+        Unicode representation for an dns_record Domain model.
+        :return: string
+        """
+        return self.domain

@@ -7,6 +7,7 @@ from base import views as base_views
 
 urlpatterns = [
     url(r'^api/v1/accounts/', include('accounts.urls', namespace='accounts')),
+    url(r'^api/v1/dashboard/', include('dns_record.urls', namespace='dashboard')),
     url(r'^api/v1/getdata/', include('base.urls', namespace='base')),
     url(r'^admin/', admin.site.urls),
 
