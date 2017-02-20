@@ -20,7 +20,6 @@ const AddDomainFormOptions = {
 class DomainView extends React.Component {
 
     static propTypes = {
-        dispatch: React.PropTypes.func.isRequired,
         isAdding: React.PropTypes.bool.isRequired,
         isAdded: React.PropTypes.bool.isRequired,
         isFailure: React.PropTypes.bool.isRequired,
@@ -59,7 +58,14 @@ class DomainView extends React.Component {
         e.preventDefault();
         const value = this.addDomainForm.getValue();
         if (value) {
-            this.props.actions.addDomain(value.domain_name, this.props.userId, this.props.token);
+            this.props.actions.addDomain(value.domain_name, this.props.userId, this.props.token).then(
+                () => {
+                    if (this.props.isAdded) {
+                        const token = this.props.token;
+                        this.props.actions.dataFetchDomainData(token);
+                    }
+                }
+            );
         }
     };
     render() {
@@ -120,10 +126,14 @@ class DomainView extends React.Component {
                                     <thead>
                                         <tr>
                                             <th>
-                                                <a className="btn btn-sm btn-default btn-dashboard-header icon-add"
-                                                   onClick={() =>{this.props.actions.toggleDomainForm(this.props.addDomain)}}>
+                                                <button className="btn btn-sm btn-default btn-dashboard-header icon-add"
+                                                   onClick={() => {
+                                                       this.props.actions.toggleDomainForm(this.props.addDomain);
+                                                   }
+                                                   }
+                                                >
                                                     <i className="fa fa-plus"> Add Domain</i>
-                                                </a>
+                                                </button>
                                             </th>
                                         </tr>
                                     </thead>
