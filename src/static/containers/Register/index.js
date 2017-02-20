@@ -153,4 +153,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterView);
-export { RegisterView as LoginViewNotConnected };
+export { RegisterView as RegisterViewNotConnected };

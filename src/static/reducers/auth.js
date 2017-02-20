@@ -10,6 +10,7 @@ import {
 const initialState = {
     token: null,
     userName: null,
+    userId: null,
     isAuthenticated: false,
     isAuthenticating: false,
     statusText: null
@@ -28,6 +29,7 @@ export default createReducer(initialState, {
             isAuthenticated: true,
             token: payload.token,
             userName: payload.user.email,
+            userId: payload.user.id,
             statusText: 'You have been successfully logged in.'
         });
     },
