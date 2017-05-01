@@ -66,7 +66,7 @@ class App extends React.Component {
                                 <span className="icon-bar"/>
                             </button>
                             <a className="navbar-brand" tabIndex="0" onClick={this.goToIndex}>
-                                Django React Redux Demo
+                                CRUDNS
                             </a>
                         </div>
                         <div className="collapse navbar-collapse" id="top-navbar">
@@ -77,14 +77,14 @@ class App extends React.Component {
                                             <i className="fa fa-home"/> Home
                                         </a>
                                     </li>
-                                    <li className={protectedClass}>
-                                        <a className="js-go-to-protected-button"
-                                           tabIndex="0"
-                                           onClick={this.goToProtected}
-                                        >
-                                            <i className="fa fa-lock"/> Protected
-                                        </a>
-                                    </li>
+                                    {/*<li className={protectedClass}>*/}
+                                        {/*<a className="js-go-to-protected-button"*/}
+                                           {/*tabIndex="0"*/}
+                                           {/*onClick={this.goToProtected}*/}
+                                        {/*>*/}
+                                            {/*<i className="fa fa-lock"/> Protected*/}
+                                        {/*</a>*/}
+                                    {/*</li>*/}
                                     <li className={dashboardClass}>
                                         <a className="js-go-to-dashboard-button"
                                            tabIndex="0"

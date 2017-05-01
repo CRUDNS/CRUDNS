@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django_rest_logger import log
 
-from dns_record.models import Domain
+from dns_record.models import Domain, DnsRecord
 
 
 class DomainSerializer(serializers.ModelSerializer):
@@ -21,3 +21,19 @@ class DomainSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         pass
+
+
+class RecordSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = DnsRecord
+
+    def create(self, validated_data):
+        """
+        Create the DNSRecord Object
+        :param validated_data:
+        """
+
+        record = DnsRecord.objects.create(**validated_data['domain'])
+        record.save()
+        return domain

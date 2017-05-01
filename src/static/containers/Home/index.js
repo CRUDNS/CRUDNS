@@ -27,12 +27,12 @@ class HomeView extends React.Component {
                     />
                 </div>
                 <div className="text-center">
-                    <h1>Django React Redux Demo</h1>
+                    <h1>CRUDNS.com</h1>
                     <h4>Hello, {this.props.userName || 'guest'}.</h4>
                 </div>
-                <div className="margin-top-medium text-center">
-                    <p>Attempt to access some <Link to="/protected"><b>protected content</b></Link>.</p>
-                </div>
+                {/*<div className="margin-top-medium text-center">*/}
+                    {/*<p>Attempt to access some <Link to="/protected"><b>protected content</b></Link>.</p>*/}
+                {/*</div>*/}
                 <div className="margin-top-medium">
                     {this.props.statusText ?
                         <div className="alert alert-info">
