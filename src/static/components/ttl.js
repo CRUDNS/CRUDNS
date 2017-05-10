@@ -2,7 +2,7 @@ import React from 'react';
 
 const ttl = (properties) => {
     return (
-        <select value={properties.selected} onChange={properties.onChange} className="form-control" name="ttl">
+        <select value={properties.selected} onChange={properties.onChange} className="" name="ttl">
             <option value="60">1 Minute</option>
             <option value="600">10 Minutes</option>
             <option value="3600">1 Hour</option>

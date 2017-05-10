@@ -8,7 +8,7 @@ class DnsRecord(models.Model):
     Model that represents a DNS Record.
 
     """
-    id = models.IntegerField(primary_key=True, editable=False)
+    id = models.AutoField(primary_key=True)
     zone = models.CharField(
         _('Zone Name'),
         max_length=255,
@@ -37,7 +37,8 @@ class DnsRecord(models.Model):
         _('MX Priority'),
         help_text=_('Order in which the Servers are supposed to be contacted'),
         null=True,
-        blank=True
+        blank=True,
+        default=None
     )
 
     data = models.TextField(
@@ -45,7 +46,8 @@ class DnsRecord(models.Model):
         help_text=_('IP address / Host name / Full domain name'),
         max_length=255,
         null=True,
-        blank=True
+        blank=True,
+        default=None
     )
 
     primary_ns = models.CharField(
@@ -53,7 +55,8 @@ class DnsRecord(models.Model):
         help_text=_('The primary name server for the domain'),
         max_length=255,
         null=True,
-        blank=True
+        blank=True,
+        default=None
     )
 
     resp_person = models.CharField(
@@ -61,21 +64,24 @@ class DnsRecord(models.Model):
         help_text=_('Responsible person for SOA record'),
         max_length=255,
         null=True,
-        blank=True
+        blank=True,
+        default=None
     )
 
     serial = models.BigIntegerField(
         _('Serial'),
         help_text=_('Serial number of the zone file is incremented each time a change is made.'),
         null=True,
-        blank=True
+        blank=True,
+        default=None
     )
 
     refresh = models.IntegerField(
         _('Refresh Interval'),
         help_text=_('Time in seconds that a secondary name server should wait between zone file update checks'),
         null=True,
-        blank=True
+        blank=True,
+        default=None
     )
 
     retry = models.IntegerField(
@@ -83,7 +89,8 @@ class DnsRecord(models.Model):
         help_text=_('Time in seconds that a secondary name server should wait before trying to contact the primary '
                     'name server again after a failed attempt to check for a zone file update.'),
         null=True,
-        blank=True
+        blank=True,
+        default=None
     )
 
     expire = models.IntegerField(
@@ -91,14 +98,16 @@ class DnsRecord(models.Model):
         help_text=_('Time in seconds that a secondary name server will treat its zone file as valid when'
                     ' the primary name server cannot be contacted. '),
         null=True,
-        blank=True
+        blank=True,
+        default=None
     )
 
     minimum = models.IntegerField(
         _('Negative Caching Time To Live'),
         help_text=_('Defines the time in seconds that any name server or resolver should cache a negative response.'),
         null=True,
-        blank=True
+        blank=True,
+        default=None
     )
 
     domain = models.ForeignKey(
@@ -141,6 +150,7 @@ class Domain(models.Model):
         on_delete=models.CASCADE,
         blank=True
     )
+
 
     def __str__(self):
         """

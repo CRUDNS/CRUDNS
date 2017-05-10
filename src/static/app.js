@@ -77,14 +77,14 @@ class App extends React.Component {
                                             <i className="fa fa-home"/> Home
                                         </a>
                                     </li>
-                                    {/*<li className={protectedClass}>*/}
-                                        {/*<a className="js-go-to-protected-button"*/}
-                                           {/*tabIndex="0"*/}
-                                           {/*onClick={this.goToProtected}*/}
-                                        {/*>*/}
-                                            {/*<i className="fa fa-lock"/> Protected*/}
-                                        {/*</a>*/}
-                                    {/*</li>*/}
+                                    {/* <li className={protectedClass}>*/}
+                                    {/* <a className="js-go-to-protected-button"*/}
+                                    {/* tabIndex="0"*/}
+                                    {/* onClick={this.goToProtected}*/}
+                                    {/* >*/}
+                                    {/* <i className="fa fa-lock"/> Protected*/}
+                                    {/* </a>*/}
+                                    {/* </li>*/}
                                     <li className={dashboardClass}>
                                         <a className="js-go-to-dashboard-button"
                                            tabIndex="0"
@@ -117,9 +117,24 @@ class App extends React.Component {
                         </div>
                     </div>
                 </nav>
-
                 <div>
-                    {this.props.children}
+                    <div className="row">
+                        <div className="col-lg-2">
+                            <nav className="nav-sidebar">
+                            <ul id="sidebar" className="nav">
+                                <li className="active"><a href="#">Domains</a></li>
+                                <li><a href="#">One Click Services</a></li>
+                                <li><a href="#">TechCrunch</a></li>
+                                <li><a href="#">GitHub</a></li>
+                                <li><a href="#">In1</a></li>
+                                <li><a href="#">TechMeMe</a></li>
+                            </ul>
+                                </nav>
+                        </div>
+                        <div className="col-lg-10">
+                            {this.props.children}</div>
+                    </div>
+
                 </div>
             </div>
         );

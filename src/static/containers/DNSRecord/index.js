@@ -1,38 +1,82 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actionCreators from '../../actions/domain';
+import * as actionCreators from '../../actions/dnsRecordRow';
 import { DNSRecordRow } from '../../containers';
 
 class DNSRecord extends React.Component {
-    render() {
-        const record = {
-            type: 'CNAME',
-            host: '@a',
-            value: '1.1.1.1',
-            ttl: '600'
-        };
-        return (
-            <div className="row">
-                <div className="col-lg-10">
-                    <DNSRecordRow token="sds" dnsRecord={record} isEditable/>
-                </div>
-            </div>
+    static propTypes = {
+        isFailure: React.PropTypes.bool.isRequired,
+        statusText: React.PropTypes.string,
+        fetched: React.PropTypes.bool.isRequired,
+    };
 
+    componentWillMount() {
+        const token = this.props.token;
+        this.props.actions.dataFetchDnsRecordData(token, this.props.params.domain);
+    }
+
+    render() {
+        console.log(this.props);
+        const r = {
+            type: 'CNAME',
+            host: '',
+            data: '',
+            ttl: 3600
+        };
+        let newRecordForm = '';
+        if (this.props.addRecord) {
+            newRecordForm = (
+                <div className="row">
+                    <div className="col-lg-7">
+                        <DNSRecordRow token={this.props.token} domain={this.props.params.domain}
+                                      actions={this.props.actions} dnsRecord={r} isEditable
+                        />
+                    </div>
+                </div>
+            );
+        }
+        return (
+            <div>
+                {this.props.fetched === false ?
+                    <p className="text-center">Loading data...</p>
+                    :
+                    <div>
+
+                        { this.props.records.reverse().map((rec) => {
+                            return (
+                                <div className="row" key={rec.id}>
+                                    <div className="col-lg-7">
+                                        <DNSRecordRow token={this.props.token} domain={this.props.params.domain}
+                                                      actions={this.props.actions} dnsRecord={rec} isEditable={false}
+                                        />
+                                    </div>
+                                </div>
+                            );
+                        })
+                        }
+                        {newRecordForm}
+                    </div>
+                }
+                <button onClick={() => {
+                    this.props.actions.toggleDnsRecordForm(this.props.addRecord);
+                }
+                } className="btn-success"
+                > New Record
+                </button>
+            </div>
         );
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        domains: state.domain.domains,
-        isFetching: state.domain.isFetching,
-        isAdding: state.domain.isAdding,
-        isAdded: state.domain.isAdded,
-        isFailure: state.domain.isFailure,
-        statusText: state.domain.statusText,
-        addDomain: state.domain.addDomain,
-        userId: state.auth.userId
+        fetched: state.record.fetched,
+        isFailure: state.record.isFailure,
+        statusText: state.record.statusText,
+        userId: state.auth.userId,
+        records: state.record.records,
+        addRecord: state.record.addRecord
     };
 };
 

@@ -1,5 +1,7 @@
 import React from 'react';
 import t from 'tcomb-form';
+import { Link } from 'react-router';
+import { push } from 'react-router-redux';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -49,10 +51,14 @@ class DomainView extends React.Component {
     }
     componentWillMount() {
         const token = this.props.token;
+        console.log(this.props);
         this.props.actions.dataFetchDomainData(token);
     }
     onFormChange = (value) => {
         this.setState({ formValues: value });
+    };
+    gotoPage = (domain) => {
+        this.props.dispatch(push(`/dashboard/${domain.domain}/`));
     };
     add = (e) => {
         e.preventDefault();
@@ -143,7 +149,10 @@ class DomainView extends React.Component {
                                             this.props.domains.map((domain) => {
                                                 return (
                                                     <tr key={domain.domain}>
-                                                        <td>{domain.domain}</td>
+                                                        <td onClick={() => {
+                                                            this.gotoPage(domain);
+                                                        }}
+                                                        >{domain.domain}</td>
                                                         <td>{domain.status === true ?
                                                             <i className="fa fa-check" aria-hidden="true"/>
                                                             : <i className="fa fa-repeat" aria-hidden="true"/>}

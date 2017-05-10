@@ -2,7 +2,7 @@ import React from 'react';
 
 const type = (properties) => {
     return (
-        <select value={properties.selected} onChange={properties.onChange} className="form-control" name="type">
+        <select value={properties.selected} onChange={properties.onChange} className="" name="type">
             <option value="A">A Record</option>
             <option value="Alias">Alias Record</option>
             <option value="AAAA">AAAA Record</option>
