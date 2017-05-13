@@ -1,4 +1,3 @@
-import uuid
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -135,7 +134,7 @@ class Domain(models.Model):
     domain = models.CharField(
         _('Domain Name'),
         help_text=_('Required. Domain Name'),
-        max_length=255
+        max_length=255,
     )
 
     status = models.BooleanField(
@@ -149,6 +148,12 @@ class Domain(models.Model):
         'accounts.User',
         on_delete=models.CASCADE,
         blank=True
+    )
+
+    collaborator = models.ManyToManyField(
+        'accounts.User',
+        blank=True,
+        related_name='collaborator'
     )
 
 

@@ -8,7 +8,10 @@ import { DATA_FETCH_DOMAIN_REQUEST,
     ADD_DOMAIN_FAILURE,
     ADD_DOMAIN_REQUEST,
     ADD_DOMAIN_SUCCESS,
-    DISPLAY_DOMAIN_FORM
+    DISPLAY_DOMAIN_FORM,
+    UPDATE_DOMAIN_FAILURE,
+    UPDATE_DOMAIN_REQUEST,
+    UPDATE_DOMAIN_SUCCESS,
 } from '../constants';
 import { authLoginUserFailure } from './auth';
 
@@ -73,15 +76,6 @@ export function addDomainSuccess() {
     };
 }
 
-export function toggleDomainForm(show) {
-    return {
-        type: DISPLAY_DOMAIN_FORM,
-        payload: {
-            addDomain: !show
-        }
-    };
-}
-
 export function addDomainFailure(error, message) {
     return {
         type: ADD_DOMAIN_FAILURE,
@@ -98,10 +92,18 @@ export function addDomainRequest() {
     };
 }
 
-export function addDomain(Domain,Id,token) {
+export function toggleDomainForm(show) {
+    return {
+        type: DISPLAY_DOMAIN_FORM,
+        payload: {
+            addDomain: !show
+        }
+    };
+}
+
+export function addDomain(Domain, Id, token) {
     return (dispatch) => {
         dispatch(addDomainRequest());
-        console.log(Id);
         return fetch(`${SERVER_URL}/api/v1/dashboard/domain/`, {
             method: 'post',
             headers: {
@@ -136,5 +138,66 @@ export function addDomain(Domain,Id,token) {
 
                 return Promise.resolve(); // TODO: we need a promise here because of the tests, find a better way
             });
+    };
+}
+
+export function updateDomain(Domain, token) {
+    return (dispatch) => {
+        dispatch(addDomainRequest());
+        return fetch(`${SERVER_URL}/api/v1/dashboard/domains/${Domain.id}/`, {
+            method: 'put',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': `Token ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(Domain)
+        })
+            .then(checkHttpStatus)
+            .then(parseJSON)
+            .then((response) => {
+                dispatch(addDomainSuccess());
+            })
+            .catch((error) => {
+                if (error && typeof error.response !== 'undefined' && error.response.status === 401) {
+                    // Invalid authentication credentials
+                    return error.response.json().then((data) => {
+                        dispatch(addDomainFailure(401, data.non_field_errors[0]));
+                    });
+                } else if (error && typeof error.response !== 'undefined' && error.response.status >= 500) {
+                    // Server side error
+                    dispatch(addDomainFailure(500, 'A server error occurred while sending your data!'));
+                } else {
+                    // Most likely connection issues
+                    dispatch(addDomainFailure('Connection Error', 'An error occurred while sending your data!'));
+                }
+
+                return Promise.resolve(); // TODO: we need a promise here because of the tests, find a better way
+            });
+    };
+}
+
+export function updateDomainSuccess() {
+    return {
+        type: UPDATE_DOMAIN_SUCCESS,
+        payload: {
+            statusText: 'You Have Successfully Added Domain.!!'
+        }
+    };
+}
+
+export function updateDomainFailure(error, message) {
+    return {
+        type: UPDATE_DOMAIN_FAILURE,
+        payload: {
+            status: error,
+            statusText: message
+        }
+    };
+}
+
+export function updateDomainRequest() {
+    return {
+        type: UPDATE_DOMAIN_REQUEST
     };
 }

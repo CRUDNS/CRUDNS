@@ -1,5 +1,4 @@
-from django.shortcuts import get_object_or_404
-from django_rest_logger import log
+
 from knox.auth import TokenAuthentication
 from knox.models import AuthToken
 from rest_framework import status
@@ -10,7 +9,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import CreateModelMixin, UpdateModelMixin
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-
+from django.db.models import Q
 from dns_record.models import Domain, DnsRecord
 from dns_record.serializers import DomainSerializer, RecordSerializer, DNSSerializer
 from lib.utils import AtomicMixin
@@ -25,7 +24,7 @@ class DomainView(AtomicMixin, CreateModelMixin, GenericAPIView):
         """
         List all Domains a user have
         """
-        domains = Domain.objects.filter(user=self.request.user)
+        domains = Domain.objects.filter(Q(user=self.request.user) | Q(collaborator__username__contains=self.request.user.username))
         serializer = DomainSerializer(domains, many=True)
         return Response(serializer.data)
 
@@ -81,4 +80,10 @@ class RecordUpdate(AtomicMixin,UpdateModelMixin,GenericAPIView):
 class DNSRecordView(viewsets.ModelViewSet):
     queryset = DnsRecord.objects.all()
     serializer_class = DNSSerializer
+    api_view(['GET', 'POST', 'PUT'])
+
+
+class DomainsView(viewsets.ModelViewSet):
+    queryset = Domain.objects.all()
+    serializer_class = DomainSerializer
     api_view(['GET', 'POST', 'PUT'])

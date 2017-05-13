@@ -26,7 +26,14 @@ class DNSRecordRow extends React.Component {
             ttl: React.PropTypes.number.isRequired,
             id: React.PropTypes.number,
         }).isRequired,
-        token: React.PropTypes.string.isRequired
+        token: React.PropTypes.string.isRequired,
+        actions: React.PropTypes.shape({
+            dataFetchDnsRecordData: React.PropTypes.func,
+            toggleDnsRecordForm: React.PropTypes.func,
+            updateDnsRecord: React.PropTypes.func,
+            addDnsRecord: React.PropTypes.func,
+        }),
+        domain: React.PropTypes.string.isRequired,
     };
 
     constructor(props) {
@@ -65,8 +72,12 @@ class DNSRecordRow extends React.Component {
     }
 
     deleteIt(e) {
-        console.log('delete');
         e.preventDefault();
+        if (!this.state.isEditable) {
+            this.setState({
+                isEditable: true
+            });
+        }
     }
 
     changeIt(e) {
@@ -96,7 +107,11 @@ class DNSRecordRow extends React.Component {
             <div className="form-group">
                 <button type="submit" className="btn btn-success"><i className="fa fa-check"/></button>
                 <button onClick={this.deleteIt} className="btn btn-danger"><i className="fa fa-times"/></button>
-            </div>) : '';
+            </div>) :
+            (
+                <div className="form-group">
+                    <button onClick={this.deleteIt} className="btn btn-danger"><i className="fa fa-trash"/></button>
+                </div>);
         switch (this.state.dnsRecord.type) {
             case 'A' || 'Alias':
                 host = (<input className="pull-left stretch" value={this.state.dnsRecord.host}

@@ -6,9 +6,40 @@ import { DNSRecordRow } from '../../containers';
 
 class DNSRecord extends React.Component {
     static propTypes = {
-        isFailure: React.PropTypes.bool.isRequired,
-        statusText: React.PropTypes.string,
+        // isFailure: React.PropTypes.bool.isRequired,
+        // statusText: React.PropTypes.string,
         fetched: React.PropTypes.bool.isRequired,
+        actions: React.PropTypes.shape({
+            dataFetchDnsRecordData: React.PropTypes.func,
+            toggleDnsRecordForm: React.PropTypes.func,
+        }),
+        addRecord: React.PropTypes.bool.isRequired,
+        params: React.PropTypes.shape({
+            domain: React.PropTypes.string.isRequired,
+        }).isRequired,
+        token: React.PropTypes.string.isRequired,
+        records: React.PropTypes.arrayOf(React.PropTypes.shape({
+            type: React.PropTypes.string.isRequired,
+            host: React.PropTypes.string,
+            zone: React.PropTypes.string,
+            primary_ns: React.PropTypes.string,
+            resp_person: React.PropTypes.string,
+            data: React.PropTypes.string,
+            service: React.PropTypes.string,
+            protocol: React.PropTypes.string,
+            mx_priority: React.PropTypes.number,
+            serial: React.PropTypes.number,
+            refresh: React.PropTypes.number,
+            retry: React.PropTypes.number,
+            expire: React.PropTypes.number,
+            minimum: React.PropTypes.number,
+            weight: React.PropTypes.number,
+            port: React.PropTypes.number,
+            target: React.PropTypes.string,
+            ttl: React.PropTypes.number.isRequired,
+            id: React.PropTypes.number,
+            reverse: React.PropTypes.func,
+        })).isRequired,
     };
 
     componentWillMount() {
@@ -17,7 +48,6 @@ class DNSRecord extends React.Component {
     }
 
     render() {
-        console.log(this.props);
         const r = {
             type: 'CNAME',
             host: '',
@@ -28,7 +58,7 @@ class DNSRecord extends React.Component {
         if (this.props.addRecord) {
             newRecordForm = (
                 <div className="row">
-                    <div className="col-lg-7">
+                    <div className="col-lg-10">
                         <DNSRecordRow token={this.props.token} domain={this.props.params.domain}
                                       actions={this.props.actions} dnsRecord={r} isEditable
                         />
@@ -37,33 +67,54 @@ class DNSRecord extends React.Component {
             );
         }
         return (
-            <div>
-                {this.props.fetched === false ?
-                    <p className="text-center">Loading data...</p>
-                    :
-                    <div>
-
-                        { this.props.records.reverse().map((rec) => {
-                            return (
-                                <div className="row" key={rec.id}>
-                                    <div className="col-lg-7">
-                                        <DNSRecordRow token={this.props.token} domain={this.props.params.domain}
-                                                      actions={this.props.actions} dnsRecord={rec} isEditable={false}
-                                        />
-                                    </div>
-                                </div>
-                            );
-                        })
-                        }
-                        {newRecordForm}
+            <div className="container">
+                <div className="row">
+                    <div className="col-lg-12">
+                        <ol className="breadcrumb-arrow">
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/dashboard/">Dashboard</a></li>
+                            <li>
+                                <a href={`/dashboard/${this.props.params.domain}/`}>{this.props.params.domain}</a>
+                            </li>
+                            <li className="active">
+                                <a href="">Manage DNS Records</a>
+                            </li>
+                        </ol>
                     </div>
-                }
-                <button onClick={() => {
-                    this.props.actions.toggleDnsRecordForm(this.props.addRecord);
-                }
-                } className="btn-success"
-                > New Record
-                </button>
+                </div>
+                <div>
+                    <div className="row"><h3>Manage DNS Records of {this.props.params.domain}</h3></div>
+                    {this.props.fetched === false ?
+                        <p className="text-center">Loading data...</p>
+                        :
+                        <div>
+
+                            { this.props.records.reverse().map((rec) => {
+                                return (
+                                    <div className="row" key={rec.id}>
+                                        <div className="col-lg-10">
+                                            <DNSRecordRow token={this.props.token} domain={this.props.params.domain}
+                                                          actions={this.props.actions} dnsRecord={rec}
+                                                          isEditable={false}
+                                            />
+                                        </div>
+                                    </div>
+
+                                );
+                            })
+                            }
+                            {newRecordForm}
+
+
+                        </div>
+                    }
+                    <button onClick={() => {
+                        this.props.actions.toggleDnsRecordForm(this.props.addRecord);
+                    }
+                    } className="btn btn-success"
+                    > New Record
+                    </button>
+                </div>
             </div>
         );
     }

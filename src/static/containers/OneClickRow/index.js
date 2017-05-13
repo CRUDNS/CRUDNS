@@ -1,9 +1,33 @@
 import React from 'react';
 
 class OneClickRow extends React.Component {
-
+    static propTypes = {
+        actions: React.PropTypes.shape({
+            dataFetchDnsRecordData: React.PropTypes.func,
+            toggleDnsRecordForm: React.PropTypes.func,
+            addDnsRecord: React.PropTypes.func,
+        }),
+        line: React.PropTypes.shape({
+            record: React.PropTypes.arrayOf(React.PropTypes.shape({
+                type: React.PropTypes.string,
+                host: React.PropTypes.string,
+                data: React.PropTypes.string,
+                ttl: React.PropTypes.number,
+                length: React.PropTypes.number,
+                map: React.PropTypes.func
+            })),
+            head: React.PropTypes.string,
+            image: React.PropTypes.string,
+            tagline: React.PropTypes.string,
+        }),
+        domain: React.PropTypes.string.isRequired,
+        token: React.PropTypes.string.isRequired,
+    };
+    constructor(props) {
+        super(props);
+        this.add = this.add.bind(this);
+    }
     add() {
-        console.log(this.props);
         this.props.line.record.map((r) => {
             return (
             this.props.actions.addDnsRecord({
@@ -48,7 +72,7 @@ class OneClickRow extends React.Component {
 
                 </div>
                 <div className="oneclick-action">
-                    <button className="btn btn-default" onClick={this.add.bind(this)}>Add</button>
+                    <button className="btn btn-default" onClick={this.add}>Add</button>
                 </div>
                 <div/>
             </div>

@@ -4,13 +4,23 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../../actions/dnsRecordRow';
 import { OneClickRow } from '../../containers';
 import blogger from './images/blogger.png';
-import tumbler from './images/tumbler.png';
+// import tumbler from './images/tumbler.png';
 
 class OneClick extends React.Component {
     static propTypes = {
-        isFailure: React.PropTypes.bool.isRequired,
-        statusText: React.PropTypes.string,
-        fetched: React.PropTypes.bool.isRequired,
+        // isFailure: React.PropTypes.bool.isRequired,
+        // statusText: React.PropTypes.string,
+        // fetched: React.PropTypes.bool.isRequired,
+        actions: React.PropTypes.shape({
+            dataFetchDnsRecordData: React.PropTypes.func,
+            toggleDnsRecordForm: React.PropTypes.func,
+            updateDnsRecord: React.PropTypes.func,
+            addDnsRecord: React.PropTypes.func,
+        }),
+        params: React.PropTypes.shape({
+            domain: React.PropTypes.string.isRequired,
+        }).isRequired,
+        token: React.PropTypes.string.isRequired,
     };
     constructor(props) {
         super(props);
@@ -41,9 +51,9 @@ class OneClick extends React.Component {
                     {this.states.services.map((service) => {
                         return (
                             <li key={service.head}>
-                            <OneClickRow line={service} token={this.props.token} domain={this.props.params.domain}
+                                <OneClickRow line={service} token={this.props.token} domain={this.props.params.domain}
                                       actions={this.props.actions}
-                            />
+                                />
                             </li>
                         );
                     })}

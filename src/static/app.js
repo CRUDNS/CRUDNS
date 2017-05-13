@@ -36,9 +36,9 @@ class App extends React.Component {
         const homeClass = classNames({
             active: this.props.pathName === '/'
         });
-        const protectedClass = classNames({
-            active: this.props.pathName === '/protected'
-        });
+        // const protectedClass = classNames({
+        //     active: this.props.pathName === '/protected'
+        // });
         const loginClass = classNames({
             active: this.props.pathName === '/login'
         });
@@ -119,19 +119,7 @@ class App extends React.Component {
                 </nav>
                 <div>
                     <div className="row">
-                        <div className="col-lg-2">
-                            <nav className="nav-sidebar">
-                            <ul id="sidebar" className="nav">
-                                <li className="active"><a href="#">Domains</a></li>
-                                <li><a href="#">One Click Services</a></li>
-                                <li><a href="#">TechCrunch</a></li>
-                                <li><a href="#">GitHub</a></li>
-                                <li><a href="#">In1</a></li>
-                                <li><a href="#">TechMeMe</a></li>
-                            </ul>
-                                </nav>
-                        </div>
-                        <div className="col-lg-10">
+                        <div className="col-lg-12">
                             {this.props.children}</div>
                     </div>
 

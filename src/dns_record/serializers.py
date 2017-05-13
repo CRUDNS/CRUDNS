@@ -1,10 +1,13 @@
 from rest_framework import serializers
-from django_rest_logger import log
+from accounts import serializers as acc
+
 
 from dns_record.models import Domain, DnsRecord
 
 
 class DomainSerializer(serializers.ModelSerializer):
+    collaborator = acc.UserSerializer(many=True)
+    user = acc.UserSerializer()
 
     class Meta:
         model = Domain

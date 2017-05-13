@@ -1,6 +1,5 @@
 import React from 'react';
 import t from 'tcomb-form';
-import { Link } from 'react-router';
 import { push } from 'react-router-redux';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
@@ -38,7 +37,8 @@ class DomainView extends React.Component {
             dataFetchDomainData: React.PropTypes.func.isRequired,
             addDomain: React.PropTypes.func.isRequired,
             toggleDomainForm: React.PropTypes.func.isRequired
-        }).isRequired
+        }).isRequired,
+        dispatch: React.PropTypes.func.isRequired
     };
     constructor(props) {
         super(props);
@@ -51,7 +51,6 @@ class DomainView extends React.Component {
     }
     componentWillMount() {
         const token = this.props.token;
-        console.log(this.props);
         this.props.actions.dataFetchDomainData(token);
     }
     onFormChange = (value) => {
@@ -121,6 +120,14 @@ class DomainView extends React.Component {
         return (
             <div className="protected">
                 <div className="container">
+                    <div className="row">
+                        <div className="col-lg-12">
+                            <ol className="breadcrumb-arrow">
+                                <li><a href="/">Home</a></li>
+                                <li className="active"><a href="/dashboard/">Dashboard</a></li>
+                            </ol>
+                        </div>
+                    </div>
                     <h1 className="text-center margin-bottom-medium">Domains</h1>
                     {this.props.isFetching === true ?
                         <p className="text-center">Loading data...</p>
@@ -149,7 +156,7 @@ class DomainView extends React.Component {
                                             this.props.domains.map((domain) => {
                                                 return (
                                                     <tr key={domain.domain}>
-                                                        <td onClick={() => {
+                                                        <td role="button" onClick={() => {
                                                             this.gotoPage(domain);
                                                         }}
                                                         >{domain.domain}</td>
