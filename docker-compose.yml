@@ -49,6 +49,6 @@ services:
             - 53:53/udp
             - 53:53/tcp
         expose:
-            - 53:53/udp
-            - 53:53/tcp
+            - 53/udp
+            - 53/tcp
 
