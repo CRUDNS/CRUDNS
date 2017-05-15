@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from accounts import serializers as acc
-
+from accounts.models import User
 
 from dns_record.models import Domain, DnsRecord
 
@@ -23,7 +23,13 @@ class DomainSerializer(serializers.ModelSerializer):
         return domain
 
     def update(self, instance, validated_data):
-        pass
+        col = validated_data.pop('collaborator')
+        instance.domain = validated_data.get('domain', instance.domain)
+        instance.status = validated_data.get('status', instance.status)
+        instance.collaborator = User.objects.filter(id__in=col)
+        instance.save()
+
+        return instance
 
 
 class RecordSerializer(serializers.ModelSerializer):
@@ -69,3 +75,4 @@ class DNSSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DnsRecord
+

@@ -1,6 +1,8 @@
 import { createReducer } from '../utils';
 import { DATA_FETCH_DOMAIN_REQUEST,
     DATA_RECEIVE_DOMAIN_DATA,
+    GET_DOMAIN_REQUEST,
+    GET_DOMAIN_DATA,
     ADD_DOMAIN_FAILURE,
     ADD_DOMAIN_REQUEST,
     ADD_DOMAIN_SUCCESS,
@@ -58,6 +60,18 @@ export default createReducer(initialState, {
             isFailure: false,
             statusText: null,
             addDomain: !state.addDomain
+        });
+    },
+    [GET_DOMAIN_DATA]: (state, payload) => {
+        return Object.assign({}, state, {
+            domains: payload.data,
+            isFetching: false,
+            statusText: 'You Have Successfully Fetched Domain.!!'
+        });
+    },
+    [GET_DOMAIN_REQUEST]: (state, payload) => {
+        return Object.assign({}, state, {
+            isFetching: true
         });
     },
 });

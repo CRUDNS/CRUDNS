@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './app';
 import { HomeView, LoginView, ProtectedView, NotFoundView, RegisterView, DomainView,
-    DNSRecord, OneClick, DomainDashboard } from './containers';
+    DNSRecord, OneClick, DomainDashboard, Collaborator } from './containers';
 import requireAuthentication from './utils/requireAuthentication';
 
 export default(
@@ -11,6 +11,7 @@ export default(
         <Route path="login" component={LoginView}/>
         <Route path="register" component={RegisterView}/>
         <Route name="domainDashboard" path="dashboard/:domain/" component={requireAuthentication(DomainDashboard)}/>
+        <Route name="collaborator" path="dashboard/:domain/collaborator/:id/" component={requireAuthentication(Collaborator)}/>
         <Route name="records" path="dashboard/:domain/records/" component={requireAuthentication(DNSRecord)}/>
         <Route name="services" path="dashboard/:domain/oneclick/" component={requireAuthentication(OneClick)}/>
         <Route path="protected" component={requireAuthentication(ProtectedView)}/>

@@ -61,8 +61,8 @@ class RecordView(AtomicMixin, CreateModelMixin, GenericAPIView):
 
 class RecordUpdate(AtomicMixin,UpdateModelMixin,GenericAPIView):
     serializer_class = RecordSerializer
-    # authentication_classes = (TokenAuthentication,)
-    # permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     queryset = DnsRecord.objects.all()
 
     def get(self, request, pk):
@@ -86,4 +86,4 @@ class DNSRecordView(viewsets.ModelViewSet):
 class DomainsView(viewsets.ModelViewSet):
     queryset = Domain.objects.all()
     serializer_class = DomainSerializer
-    api_view(['GET', 'POST', 'PUT'])
+    api_view(['GET', 'POST', 'PUT', 'PATCH'])
