@@ -153,7 +153,8 @@ class Domain(models.Model):
     collaborator = models.ManyToManyField(
         'accounts.User',
         blank=True,
-        related_name='collaborator'
+        related_name='collaborator',
+        null= True
     )
 
 
