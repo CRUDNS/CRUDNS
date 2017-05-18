@@ -1,10 +1,10 @@
 import React from 'react';
-import {Link} from 'react-router';
-import {connect} from 'react-redux';
-import {push} from 'react-router-redux';
+import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import classNames from 'classnames';
 
-import {authLogoutAndRedirect} from './actions/auth';
+import { authLogoutAndRedirect } from './actions/auth';
 import './styles/main.scss';
 
 class App extends React.Component {
@@ -51,7 +51,7 @@ class App extends React.Component {
 
         return (
             <div className="app">
-                {/*<nav className="navbar navbar-inverse navbar-embossed">*/}
+                {/* <nav className="navbar navbar-inverse navbar-embossed">*/}
                 <div>
                     <div id="logo">
                         <a tabIndex="0" onClick={this.goToIndex}>
@@ -66,14 +66,6 @@ class App extends React.Component {
                                         <i className="fa fa-home"/> Home
                                     </a>
                                 </li>
-                                {/* <li className={protectedClass}>*/}
-                                {/* <a className="js-go-to-protected-button"*/}
-                                {/* tabIndex="0"*/}
-                                {/* onClick={this.goToProtected}*/}
-                                {/* >*/}
-                                {/* <i className="fa fa-lock"/> Protected*/}
-                                {/* </a>*/}
-                                {/* </li>*/}
                                 <li className={dashboardClass}>
                                     <a className="js-go-to-dashboard-button"
                                        tabIndex="0"
@@ -125,4 +117,4 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 export default connect(mapStateToProps)(App);
-export {App as AppNotConnected};
+export { App as AppNotConnected };

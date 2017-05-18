@@ -6,7 +6,7 @@ import * as domainActionCreators from '../../actions/domain';
 
 class DomainDashboard extends React.Component {
     static propTypes = {
-        // isFailure: React.PropTypes.bool.isRequired,
+        domainFetch: React.PropTypes.bool.isRequired,
         // statusText: React.PropTypes.string,
         fetched: React.PropTypes.bool.isRequired,
         actions: React.PropTypes.shape({
@@ -45,6 +45,18 @@ class DomainDashboard extends React.Component {
             id: React.PropTypes.number,
             reverse: React.PropTypes.func,
         })).isRequired,
+        domain: React.PropTypes.shape({
+            domain: React.PropTypes.string.isRequired,
+            id: React.PropTypes.number.isRequired,
+            user: React.PropTypes.shape({
+                email: React.PropTypes.string.isRequired,
+                id: React.PropTypes.string.isRequired,
+                first_name: React.PropTypes.string,
+                last_name: React.PropTypes.string,
+            }),
+            collaborator: React.PropTypes.arrayOf(React.PropTypes.string),
+            map: React.PropTypes.func,
+        })
     };
 
     componentWillMount() {
@@ -56,7 +68,7 @@ class DomainDashboard extends React.Component {
     render() {
         const c = [];
         let collaborate = null;
-        let mydomain = null;
+        let mydomain = { id: 1 };
         if (this.props.domainFetch === false) {
             collaborate = (<ul className="list-unstyled">
                 <li>Loading Data</li>
@@ -155,9 +167,10 @@ class DomainDashboard extends React.Component {
                                 <h4><b>Collaborators</b></h4>
                                 <p>Manage Collaborators to this Domain</p>
                                 {collaborate}
-                                {c.includes(this.props.username) ? '':
-                                    <div className="card-link">
-                                        <a href={`/dashboard/${this.props.params.domain}/oneclick/`}>
+                                { this.props.domainFetch ?
+                                    ''
+                                    : <div className="card-link">
+                                        <a href={`/dashboard/${this.props.params.domain}/collaborator/${mydomain.id}/`}>
                                             <h5><i className="fa fa-plus" aria-hidden="true"/> Manage Collaborators</h5>
                                         </a>
                                     </div>

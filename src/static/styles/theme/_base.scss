@@ -127,7 +127,8 @@ html {
   max-width: 120px;
   display: inline-block;
   vertical-align: top;
-  padding-bottom: 1.2rem;
+  margin-top: 5rem;
+  padding: 1.2rem 1.2rem;
 }
 
 .oneclick-head {
@@ -149,6 +150,7 @@ html {
   transition: 0.3s;
   margin: 4rem 2rem;
   background-color: #FFFFFF;
+  padding: 2rem 2rem;
 }
 
 /* On mouse-over, add a deeper shadow */
@@ -249,7 +251,7 @@ html {
     color: #434a54
 }
 .main-body {
-  background-image: url('../images/noise_lines.png');
+  background-image: url("../images/noise_lines.png");
 }
 
 #breadcrumb {
@@ -306,7 +308,7 @@ html {
   content: "";
   position: absolute;
   top: 0;
-  border: 0 solid #34495E;
+  border: solid #34495E;
   border-width: 20px 10px;
   width: 0;
   height: 0;

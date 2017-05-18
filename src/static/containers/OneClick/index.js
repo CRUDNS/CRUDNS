@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../../actions/dnsRecordRow';
 import { OneClickRow } from '../../containers';
 import blogger from './images/blogger.png';
-// import tumbler from './images/tumbler.png';
+import tumbler from './images/tumbler.png';
 
 class OneClick extends React.Component {
     static propTypes = {
@@ -22,6 +22,7 @@ class OneClick extends React.Component {
         }).isRequired,
         token: React.PropTypes.string.isRequired,
     };
+
     constructor(props) {
         super(props);
         const services = [
@@ -35,7 +36,18 @@ class OneClick extends React.Component {
                     data: 'ghs.google.com.',
                     ttl: 3600,
                 }]
-            }
+            },
+            {
+                head: 'Tumbler',
+                tagline: 'Use Tumblr for your blog.',
+                image: tumbler,
+                record: [{
+                    type: 'CNAME',
+                    host: 'blog',
+                    data: 'domains.tumblr.com.',
+                    ttl: 3600,
+                }]
+            },
 
         ];
         this.states = {
@@ -46,18 +58,25 @@ class OneClick extends React.Component {
 
     render() {
         return (
-            <div>
-                <ul>
-                    {this.states.services.map((service) => {
-                        return (
-                            <li key={service.head}>
-                                <OneClickRow line={service} token={this.props.token} domain={this.props.params.domain}
-                                      actions={this.props.actions}
-                                />
-                            </li>
-                        );
-                    })}
-                </ul>
+            <div className="row">
+                <div className="col-md-10">
+                    <h1 className="text-center"> One Click Services</h1>
+                    <ul>
+                        {this.states.services.map((service) => {
+                            return (
+                                <li key={service.head}>
+                                    <div className="card">
+                                        <OneClickRow line={service}
+                                                     token={this.props.token} domain={this.props.params.domain}
+                                                     actions={this.props.actions}
+                                        />
+                                    </div>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </div>
+                <div className="col-md-2"/>
             </div>
         );
     }

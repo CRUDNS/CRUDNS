@@ -11,7 +11,8 @@ class UserRegistrationSerializerTest(CustomTestCase, APITestCase):
         {'data': {'email': 'test1@mailinator.com',
                   'first_name': 'test',
                   'last_name': 'user',
-                  'password': 'test'},
+                  'password': 'test',
+                  'username': 'test'},
          'error': ('email', ['Please use a different email address provider.']),
          'label': 'Invalid email.',
          'method': 'POST',
@@ -21,7 +22,8 @@ class UserRegistrationSerializerTest(CustomTestCase, APITestCase):
         {'data': {'email': 'test1@gmail',
                   'first_name': 'test',
                   'last_name': 'user',
-                  'password': 'test'},
+                  'password': 'test',
+                  'username': 'test'},
          'error': ('email', ['Enter a valid email address.']),
          'label': 'Bad email format.',
          'method': 'POST',
@@ -32,11 +34,12 @@ class UserRegistrationSerializerTest(CustomTestCase, APITestCase):
         {'email': 'emailsuccess@gmail.com',
          'first_name': 'test',
          'last_name': 'user',
-         'password': 'test'},
+         'password': 'test',
+         'username': 'test'},
     ]
 
     def setUp(self):
-        self.required_fields = ['email', 'first_name', 'last_name', 'password']
+        self.required_fields = ['email', 'first_name', 'last_name', 'password', 'username']
         self.not_required_fields = ['id']
         self.user = UserFactory.create(email='emailwilllogininserializer@mydomain.com')
 
@@ -71,7 +74,7 @@ class UserSerializerTest(CustomTestCase, APITestCase):
 
     def setUp(self):
         self.required_fields = ['email', 'first_name', 'last_name']
-        self.not_required_fields = []
+        self.not_required_fields = ['id']
 
     def test_fields(self):
         serializer = UserSerializer()

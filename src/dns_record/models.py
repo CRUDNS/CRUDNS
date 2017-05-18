@@ -3,10 +3,8 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class DnsRecord(models.Model):
-    """
-    Model that represents a DNS Record.
+    """Model that represents a DNS Record."""
 
-    """
     id = models.AutoField(primary_key=True)
     zone = models.CharField(
         _('Zone Name'),
@@ -127,10 +125,8 @@ class DnsRecord(models.Model):
 
 
 class Domain(models.Model):
-    """
-    Model that represent a domain that owned by a User
+    """Model that represent a domain that owned by a User."""
 
-    """
     domain = models.CharField(
         _('Domain Name'),
         help_text=_('Required. Domain Name'),
@@ -154,13 +150,12 @@ class Domain(models.Model):
         'accounts.User',
         blank=True,
         related_name='collaborator',
-        null= True
+        null=True
     )
 
-
     def __str__(self):
-        """
-        Unicode representation for an dns_record Domain model.
+        """Unicode representation for an dns_record Domain model.
+
         :return: string
         """
         return self.domain

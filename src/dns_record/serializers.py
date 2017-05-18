@@ -1,7 +1,6 @@
 from rest_framework import serializers
-from accounts import serializers as acc
-from accounts.models import User
 
+from accounts import serializers as acc
 from dns_record.models import Domain, DnsRecord
 
 
@@ -13,8 +12,8 @@ class DomainSerializer(serializers.ModelSerializer):
         model = Domain
 
     def create(self, validated_data):
-        """
-        Create the Domain Object
+        """Create the Domain Object.
+
         :param validated_data:
         """
 
@@ -23,6 +22,11 @@ class DomainSerializer(serializers.ModelSerializer):
         return domain
 
     def update(self, instance, validated_data):
+        """Update the Domain Object.
+
+        :param instance:
+        :param validated_data:
+        """
         instance.domain = validated_data.get('domain', instance.domain)
         instance.status = validated_data.get('status', instance.status)
         instance.collaborator = validated_data.get('collaborator', instance.collaborator)
@@ -36,8 +40,8 @@ class DomainsSerializer(serializers.ModelSerializer):
         model = Domain
 
     def create(self, validated_data):
-        """
-        Create the Domain Object
+        """Create the Domain Object.
+
         :param validated_data:
         """
 
@@ -46,6 +50,11 @@ class DomainsSerializer(serializers.ModelSerializer):
         return domain
 
     def update(self, instance, validated_data):
+        """Update the Domain Object.
+
+        :param instance:
+        :param validated_data:
+        """
         instance.domain = validated_data.get('domain', instance.domain)
         instance.status = validated_data.get('status', instance.status)
         instance.collaborator = validated_data.get('collaborator', instance.collaborator)
@@ -53,13 +62,14 @@ class DomainsSerializer(serializers.ModelSerializer):
 
         return instance
 
+
 class RecordSerializer(serializers.ModelSerializer):
     class Meta:
         model = DnsRecord
 
     def create(self, validated_data):
-        """
-        Create the DNSRecord Object
+        """Create the DNSRecord Object.
+
         :param validated_data:
         """
         validated_data['domain'] = Domain.objects.get(domain=validated_data['domain']).id
@@ -69,7 +79,11 @@ class RecordSerializer(serializers.ModelSerializer):
         return record
 
     def update(self, instance, validated_data):
+        """Update the Record Object.
 
+        :param validated_data:
+        :param instance:
+        """
         instance.zone = validated_data.get('zone', instance.zone)
         instance.ttl = validated_data.get('ttl', instance.ttl)
         instance.type = validated_data.get('type', instance.type)
@@ -96,4 +110,3 @@ class DNSSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DnsRecord
-

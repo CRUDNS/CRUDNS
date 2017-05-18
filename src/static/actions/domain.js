@@ -105,7 +105,7 @@ export function toggleDomainForm(show) {
 export function addDomain(Domain, Id, token) {
     return (dispatch) => {
         dispatch(addDomainRequest());
-        return fetch(`${SERVER_URL}/api/v1/dashboard/domain/`, {
+        return fetch(`${SERVER_URL}/api/v1/dashboard/domains/`, {
             method: 'post',
             headers: {
                 'Accept': 'application/json',
@@ -222,7 +222,7 @@ export function getDomainDataRequest() {
     };
 }
 
-export function getDomain(token,id) {
+export function getDomain(token, id) {
     return (dispatch, state) => {
         dispatch(getDomainDataRequest());
         return fetch(`${SERVER_URL}/api/v1/dashboard/domain/${id}/`, {
@@ -250,7 +250,6 @@ export function getDomain(token,id) {
                 } else {
                     // Most likely connection issues
                     dispatch(authLoginUserFailure('Connection Error', 'An error occurred while sending your data!'));
-                    console.log(error);
                 }
 
                 dispatch(push('/login'));
