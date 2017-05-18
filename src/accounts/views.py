@@ -69,16 +69,14 @@ class UserEmailConfirmationStatusView(GenericAPIView):
 
 
 class GetUserView(GenericAPIView):
-    # authentication_classes = (TokenAuthentication,)
-    # permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     serializer_class = UserACSerializer
-    api_view(['GET',])
+    api_view(['GET', ])
     queryset = User.objects.all()
 
     def get(self, request, q):
-        """
-        List all Domains a user have
-        """
+        """List all Domains a user have."""
         users = User.objects.filter(email__icontains=q)
         serializer = UserACSerializer(users, many=True)
         return Response(serializer.data)

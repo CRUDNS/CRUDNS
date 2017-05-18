@@ -23,57 +23,71 @@ class OneClickRow extends React.Component {
         domain: React.PropTypes.string.isRequired,
         token: React.PropTypes.string.isRequired,
     };
+
     constructor(props) {
         super(props);
         this.add = this.add.bind(this);
     }
+
     add() {
         this.props.line.record.map((r) => {
             return (
-            this.props.actions.addDnsRecord({
-                ...r,
-                domain: this.props.domain,
-                zone: this.props.domain,
-            }, this.props.token)
+                this.props.actions.addDnsRecord({
+                    ...r,
+                    domain: this.props.domain,
+                    zone: this.props.domain,
+                }, this.props.token)
             );
         });
     }
+
     render() {
         return (
             <div className="row">
-                <img alt={this.props.line.head} className="oneclick-image" src={this.props.line.image}/>
-                <div className="oneclick-head">
-                    <h2>{this.props.line.head}</h2>
-                    <p>{this.props.line.tagline}</p>
-                    <div>
-                        <h4>Adds {this.props.line.record.length} Records</h4>
-                        <table className="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Name</th>
-                                    <th>Content</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {this.props.line.record.map((rec) => {
-                                    return (
-                                        <tr key={rec.host}>
-                                            <td>{rec.type}</td>
-                                            <td>{rec.host}</td>
-                                            <td>{rec.data}</td>
+                <div className="col-md-2">
+                    <img alt={this.props.line.head} className="oneclick-image" src={this.props.line.image}/>
+                </div>
+                <div className="col-md-8">
+                    <div className="oneclick-head">
+                        <div className="row">
+                            <div className="col-md-5">
+                                <h4>{this.props.line.head}</h4>
+                                <p>{this.props.line.tagline}</p>
+                            </div>
+
+                            <div className="col-md-7">
+                                <h6>Adds {this.props.line.record.length} Records</h6>
+                                <table className="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Name</th>
+                                            <th>Content</th>
                                         </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
+                                    </thead>
+                                    <tbody>
+                                        {this.props.line.record.map((rec) => {
+                                            return (
+                                                <tr key={rec.host}>
+                                                    <td>{rec.type}</td>
+                                                    <td>{rec.host}</td>
+                                                    <td>{rec.data}</td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </tbody>
+                                </table>
 
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <div className="col-md-2">
+                    <div className="oneclick-action">
+                        <button className="btn btn-default" onClick={this.add}>Add</button>
+                    </div>
+                </div>
 
-                </div>
-                <div className="oneclick-action">
-                    <button className="btn btn-default" onClick={this.add}>Add</button>
-                </div>
                 <div/>
             </div>
         );

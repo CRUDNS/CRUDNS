@@ -6,7 +6,7 @@ services:
             file: docker-common.yml
             service: nginx
         ports:
-            - 8000:8000
+            - 8000:80
         volumes:
             - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
         volumes_from:
@@ -46,8 +46,9 @@ services:
         entrypoint:
             - /bind-entrypoint.sh
         ports:
-            - 53:53
-#        expose:
-#            - 53/udp
-#            - 53/tcp
+            - 53:53/udp
+            - 53:53/tcp
+        expose:
+            - 53/udp
+            - 53/tcp
 

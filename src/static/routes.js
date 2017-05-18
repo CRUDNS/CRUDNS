@@ -11,7 +11,9 @@ export default(
         <Route path="login" component={LoginView}/>
         <Route path="register" component={RegisterView}/>
         <Route name="domainDashboard" path="dashboard/:domain/" component={requireAuthentication(DomainDashboard)}/>
-        <Route name="collaborator" path="dashboard/:domain/collaborator/:id/" component={requireAuthentication(Collaborator)}/>
+        <Route name="collaborator" path="dashboard/:domain/collaborator/:id/"
+               component={requireAuthentication(Collaborator)}
+        />
         <Route name="records" path="dashboard/:domain/records/" component={requireAuthentication(DNSRecord)}/>
         <Route name="services" path="dashboard/:domain/oneclick/" component={requireAuthentication(OneClick)}/>
         <Route path="protected" component={requireAuthentication(ProtectedView)}/>

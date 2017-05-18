@@ -40,6 +40,7 @@ class DomainView extends React.Component {
         }).isRequired,
         dispatch: React.PropTypes.func.isRequired
     };
+
     constructor(props) {
         super(props);
 
@@ -49,10 +50,12 @@ class DomainView extends React.Component {
             }
         };
     }
+
     componentWillMount() {
         const token = this.props.token;
         this.props.actions.dataFetchDomainData(token);
     }
+
     onFormChange = (value) => {
         this.setState({ formValues: value });
     };
@@ -73,6 +76,7 @@ class DomainView extends React.Component {
             );
         }
     };
+
     render() {
         let submitText = 'Submit';
         if (this.props.isFailure) {
@@ -128,31 +132,36 @@ class DomainView extends React.Component {
                             </ol>
                         </div>
                     </div>
-                    <h1 className="text-center margin-bottom-medium">Domains</h1>
+                    <h1 className="text-center">Dashboard</h1>
                     {this.props.isFetching === true ?
                         <p className="text-center">Loading data...</p>
                         :
                         <div className="row">
                             <div className="col-lg-4">
-                                {statusText}
-                                <table className="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                <button className="btn btn-sm btn-default btn-dashboard-header icon-add"
-                                                   onClick={() => {
-                                                       this.props.actions.toggleDomainForm(this.props.addDomain);
-                                                   }
-                                                   }
-                                                >
-                                                    <i className="fa fa-plus"> Add Domain</i>
-                                                </button>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr><td>{newDomainForm}</td></tr>
-                                        {
+                                <div className="card">
+                                    <h3 className="text-center margin-bottom-medium">Domains</h3>
+                                    {statusText}
+                                    <table className="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <button className="btn btn-sm btn-default
+                                                    btn-dashboard-header icon-add"
+                                                        onClick={() => {
+                                                            this.props.actions.toggleDomainForm(this.props.addDomain);
+                                                        }
+                                                        }
+                                                    >
+                                                        <i className="fa fa-plus"> Add Domain</i>
+                                                    </button>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{newDomainForm}</td>
+                                            </tr>
+                                            {
                                             this.props.domains.map((domain) => {
                                                 return (
                                                     <tr key={domain.domain}>
@@ -168,11 +177,33 @@ class DomainView extends React.Component {
                                                 );
                                             })
                                         }
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                            <div className="col-lg-4"/>
-                            <div className="col-lg-4"/>
+                            <div className="col-lg-8">
+                                <div className="card">
+                                    <h3 className="text-center margin-bottom-medium">API Details</h3>
+                                    <table className="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Parameter</th>
+                                                <th>Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>User Id</td>
+                                                <td>{this.props.userId}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Auth Token</td>
+                                                <td>{this.props.token}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     }
                 </div>

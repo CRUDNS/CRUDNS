@@ -57,7 +57,8 @@ class AccountTests(CustomTestCase, APITestCase):
             'email': 'emailsuccess@mydomain.com',
             'first_name': 'test',
             'last_name': 'user',
-            'password': 'test'
+            'password': 'test',
+            'username': 'test'
         }
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -76,7 +77,8 @@ class AccountTests(CustomTestCase, APITestCase):
             'email': 'emailsuccess@mydomain.com',
             'first_name': 'test',
             'last_name': 'user',
-            'password': 'test'
+            'password': 'test',
+            'username': 'test'
         }
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
