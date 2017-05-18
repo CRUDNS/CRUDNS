@@ -92,7 +92,7 @@ class DomainView extends React.Component {
                     />
                     <button disabled={this.props.isAdding}
                             type="submit"
-                            className="btn btn-default btn-block"
+                            className="btn btn-primary btn-block"
                     >
                         {submitText}
                     </button>
@@ -122,7 +122,7 @@ class DomainView extends React.Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-12">
-                            <ol className="breadcrumb-arrow">
+                            <ol id="breadcrumb">
                                 <li><a href="/">Home</a></li>
                                 <li className="active"><a href="/dashboard/">Dashboard</a></li>
                             </ol>

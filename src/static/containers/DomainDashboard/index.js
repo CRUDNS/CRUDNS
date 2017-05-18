@@ -86,7 +86,7 @@ class DomainDashboard extends React.Component {
             <div className="container">
                 <div className="row">
                     <div className="col-lg-12">
-                        <ol className="breadcrumb-arrow">
+                        <ol id="breadcrumb">
                             <li><a href="/">Home</a></li>
                             <li><a href="/dashboard/">Dashboard</a></li>
                             <li className="active">

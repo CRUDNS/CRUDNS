@@ -115,7 +115,8 @@ export function addDomain(Domain, Id, token) {
             body: JSON.stringify({
                 domain: Domain,
                 user: Id,
-                status: false
+                status: false,
+                collaborator: []
             })
         })
             .then(checkHttpStatus)
@@ -224,7 +225,7 @@ export function getDomainDataRequest() {
 export function getDomain(token,id) {
     return (dispatch, state) => {
         dispatch(getDomainDataRequest());
-        return fetch(`${SERVER_URL}/api/v1/dashboard/domains/${id}/`, {
+        return fetch(`${SERVER_URL}/api/v1/dashboard/domain/${id}/`, {
             credentials: 'include',
             headers: {
                 Accept: 'application/json',
@@ -249,6 +250,7 @@ export function getDomain(token,id) {
                 } else {
                     // Most likely connection issues
                     dispatch(authLoginUserFailure('Connection Error', 'An error occurred while sending your data!'));
+                    console.log(error);
                 }
 
                 dispatch(push('/login'));

@@ -70,8 +70,8 @@ class DNSRecord extends React.Component {
             <div className="container">
                 <div className="row">
                     <div className="col-lg-12">
-                        <ol className="breadcrumb-arrow">
-                            <li><a href="/">Home</a></li>
+                        <ol id="breadcrumb">
+                            <li><a href="/"><i className="fa fa-home"/> Home</a></li>
                             <li><a href="/dashboard/">Dashboard</a></li>
                             <li>
                                 <a href={`/dashboard/${this.props.params.domain}/`}>{this.props.params.domain}</a>

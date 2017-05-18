@@ -23,14 +23,35 @@ class DomainSerializer(serializers.ModelSerializer):
         return domain
 
     def update(self, instance, validated_data):
-        col = validated_data.pop('collaborator')
         instance.domain = validated_data.get('domain', instance.domain)
         instance.status = validated_data.get('status', instance.status)
-        instance.collaborator = User.objects.filter(id__in=col)
+        instance.collaborator = validated_data.get('collaborator', instance.collaborator)
         instance.save()
 
         return instance
 
+
+class DomainsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Domain
+
+    def create(self, validated_data):
+        """
+        Create the Domain Object
+        :param validated_data:
+        """
+
+        domain = Domain.objects.create(domain=validated_data['domain'], user=validated_data['user'], status=False)
+        domain.save()
+        return domain
+
+    def update(self, instance, validated_data):
+        instance.domain = validated_data.get('domain', instance.domain)
+        instance.status = validated_data.get('status', instance.status)
+        instance.collaborator = validated_data.get('collaborator', instance.collaborator)
+        instance.save()
+
+        return instance
 
 class RecordSerializer(serializers.ModelSerializer):
     class Meta:

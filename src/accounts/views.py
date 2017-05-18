@@ -4,13 +4,14 @@ from knox.auth import TokenAuthentication
 from knox.models import AuthToken
 from rest_framework import status
 from rest_framework.authentication import BasicAuthentication
+from rest_framework.decorators import api_view
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from accounts.models import User
-from accounts.serializers import UserRegistrationSerializer, UserSerializer
+from accounts.serializers import UserRegistrationSerializer, UserSerializer, UserACSerializer
 from lib.utils import AtomicMixin
 
 
@@ -65,3 +66,19 @@ class UserEmailConfirmationStatusView(GenericAPIView):
         """Retrieve user current confirmed_email status."""
         user = self.request.user
         return Response({'status': user.confirmed_email}, status=status.HTTP_200_OK)
+
+
+class GetUserView(GenericAPIView):
+    # authentication_classes = (TokenAuthentication,)
+    # permission_classes = (IsAuthenticated,)
+    serializer_class = UserACSerializer
+    api_view(['GET',])
+    queryset = User.objects.all()
+
+    def get(self, request, q):
+        """
+        List all Domains a user have
+        """
+        users = User.objects.filter(email__icontains=q)
+        serializer = UserACSerializer(users, many=True)
+        return Response(serializer.data)

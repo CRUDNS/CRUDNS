@@ -10,6 +10,15 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('email', 'first_name', 'last_name', 'id')
 
 
+class UserACSerializer(serializers.ModelSerializer):
+    value = serializers.CharField(source='id')
+    label = serializers.CharField(source='email')
+
+    class Meta:
+        model = User
+        fields = ('value', 'label')
+
+
 class UserRegistrationSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
 

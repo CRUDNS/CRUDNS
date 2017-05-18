@@ -56,7 +56,7 @@ const common = {
             test: /\.scss$/,
             options: {
                 postcss: [
-                    autoprefixer({ browsers: ['last 2 versions'] })
+                    autoprefixer({browsers: ['last 2 versions']})
                 ],
                 sassLoader: {
                     data: `@import "${__dirname}/../src/static/styles/config/_variables.scss";`
@@ -67,7 +67,7 @@ const common = {
             test: /\.css$/,
             options: {
                 postcss: [
-                    autoprefixer({ browsers: ['last 2 versions'] })
+                    autoprefixer({browsers: ['last 2 versions']})
                 ]
             }
         }),
@@ -78,7 +78,7 @@ const common = {
             inject: 'body'
         }),
         new webpack.DefinePlugin({
-            'process.env': { NODE_ENV: TARGET === 'dev' ? '"development"' : '"production"' },
+            'process.env': {NODE_ENV: TARGET === 'dev' ? '"development"' : '"production"'},
             '__DEVELOPMENT__': TARGET === 'dev'
         }),
         new webpack.ProvidePlugin({
@@ -99,7 +99,7 @@ const common = {
             {
                 test: /\.js$/,
                 use: [
-                    { loader: 'babel-loader' }
+                    {loader: 'babel-loader'}
                 ],
                 exclude: /node_modules/
             },

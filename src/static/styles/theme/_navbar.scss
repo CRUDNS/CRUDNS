@@ -1,7 +1,46 @@
-.navbar {
-  border-radius: 0px;
+@import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
+@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:300italic);
 
-  a {
-    text-decoration: none;
-  }
+#logo a {
+  text-decoration:none;
+float:left;
+color:#FFFFFF;
+font-size:30px;
+margin-top:10px;
+margin-left:50px;
+font-family: 'Montserrat', sans-serif;
+}
+#navbar{
+height:60px;
+width:100%;
+border-bottom:10px solid #2C3E50;
+background-color:#34495E;
+}
+#navbar ul{
+list-style:none;
+}
+#navbar ul li a{
+text-decoration:none;
+float:left;
+padding:10px;
+text-align:center;
+color:#FFFFFF;
+margin-right:10px;
+margin-top:5px;
+margin-bottom:5px;
+font-size:20px;
+font-family: 'Roboto Condensed', sans-serif;
+font-style:italic;
+}
+
+#navbar ul li a:hover{
+color:#FFFFFF;
+text-shadow:0px 2px 1px #2C3E50;
+}
+#navbar ul li {
+  float:left;
+}
+
+#navbar ul {
+  float: right;
 }

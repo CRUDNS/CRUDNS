@@ -11,6 +11,7 @@ router.register(r'domains', DomainsView)
 
 urlpatterns = [
     url(_(r'domain/$'), views.DomainView.as_view(), name='domain'),
+    url(_(r'domain/(?P<pk>[0-9])/$'), views.DomainView.as_view(), name='domain'),
     url(_(r'records/edit/(?P<pk>[0-9])/$'), views.RecordUpdate.as_view(), name='record-edit'),
     url(_(r'records/(?P<domain>[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9].[a-zA-Z]{2,})/$'), views.RecordView.as_view(),
         name='record'),

@@ -46,9 +46,8 @@ services:
         entrypoint:
             - /bind-entrypoint.sh
         ports:
-            - 53:53/udp
-            - 53:53/tcp
-        expose:
-            - 53/udp
-            - 53/tcp
+            - 53:53
+#        expose:
+#            - 53/udp
+#            - 53/tcp
 

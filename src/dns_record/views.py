@@ -11,20 +11,25 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.db.models import Q
 from dns_record.models import Domain, DnsRecord
-from dns_record.serializers import DomainSerializer, RecordSerializer, DNSSerializer
+from dns_record.serializers import DomainSerializer, RecordSerializer, DNSSerializer, DomainsSerializer
 from lib.utils import AtomicMixin
 
 
 class DomainView(AtomicMixin, CreateModelMixin, GenericAPIView):
     serializer_class = DomainSerializer
+    queryset = DnsRecord.objects.all()
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         """
         List all Domains a user have
         """
-        domains = Domain.objects.filter(Q(user=self.request.user) | Q(collaborator__username__contains=self.request.user.username))
+        if self.request.query_params.get('pk'):
+            domains = Domain.objects.filter(id=self.request.query_params.get('pk'))
+        else:
+            domains = Domain.objects.filter(Q(user=self.request.user) |
+                                        Q(collaborator__username__contains=self.request.user.username)).distinct()
         serializer = DomainSerializer(domains, many=True)
         return Response(serializer.data)
 
@@ -37,8 +42,8 @@ class DomainView(AtomicMixin, CreateModelMixin, GenericAPIView):
 
 class RecordView(AtomicMixin, CreateModelMixin, GenericAPIView):
     serializer_class = RecordSerializer
-    # authentication_classes = (TokenAuthentication,)
-    # permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     queryset = DnsRecord.objects.all()
 
     def get(self, request, domain):
@@ -78,12 +83,16 @@ class RecordUpdate(AtomicMixin,UpdateModelMixin,GenericAPIView):
 
 
 class DNSRecordView(viewsets.ModelViewSet):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     queryset = DnsRecord.objects.all()
     serializer_class = DNSSerializer
     api_view(['GET', 'POST', 'PUT'])
 
 
 class DomainsView(viewsets.ModelViewSet):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     queryset = Domain.objects.all()
-    serializer_class = DomainSerializer
+    serializer_class = DomainsSerializer
     api_view(['GET', 'POST', 'PUT', 'PATCH'])

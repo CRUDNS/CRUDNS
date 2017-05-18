@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as actionCreators from '../../actions/domain';
 
-class OneClick extends React.Component {
+class Collaborator extends React.Component {
     static propTypes = {
         // isFailure: React.PropTypes.bool.isRequired,
         // statusText: React.PropTypes.string,
@@ -26,16 +26,25 @@ class OneClick extends React.Component {
     }
 
     deleteIt(id) {
-        const domain = {...this.props.domain};
+        const domain = {...this.props.domain[0]};
         let index = 0;
+        let cols = [];
         for (let i = 0; i < domain.collaborator.length; i++) {
-            if (id === domain.collaborator.id) {
+            if (id === domain.collaborator[i].id) {
                 index = i;
             }
+            else{
+                cols.push(domain.collaborator[i].id);
+            }
         }
-        domain.collaborator.splice(index, 1);
         delete domain.user;
-        this.props.actions.updateDomain(domain, this.props.token);
+        delete domain.collaborator;
+        domain['collaborator'] = cols;
+        console.log(domain);
+        this.props.actions.updateDomain(domain, this.props.token).then(()=> {
+            const token = this.props.token;
+            this.props.actions.getDomain(token, this.props.params.id);
+        });
     }
 
 
@@ -60,7 +69,7 @@ class OneClick extends React.Component {
                     {this.props.statusText === null ?
                         <tbody>
                         <tr>
-                            <td>Loading Data</td>
+                            <td>Loading Data...</td>
                             <td/>
                             <td/>
                         </tr>
@@ -68,13 +77,13 @@ class OneClick extends React.Component {
                         :
                         <tbody>
                         <tr>
-                            <td>{this.props.user.first_name} {this.props.user.last_name}</td>
-                            <td>{this.props.user.email}</td>
+                            <td>{this.props.domain[0].user.first_name} {this.props.domain[0].user.last_name}</td>
+                            <td>{this.props.domain[0].user.email}</td>
                             <td>Owner</td>
                             <td/>
                         </tr>
                         {console.log(this.props.statusText)}
-                        {this.props.domain.collaborator.map((col) => {
+                        {this.props.domain[0].collaborator.map((col) => {
                             return (
                                 <tr key={col.id}>
                                     <td>{col.first_name} {col.last_name}</td>
@@ -108,7 +117,6 @@ const mapStateToProps = (state) => {
         records: state.record.records,
         addRecord: state.record.addRecord,
         domain: state.domain.domains,
-        user: state.domain.domains.user
     };
 };
 
@@ -118,5 +126,5 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OneClick);
-export {OneClick as OneClickNotConnected};
+export default connect(mapStateToProps, mapDispatchToProps)(Collaborator);
+export {Collaborator as CollaboratorNotConnected};

@@ -92,8 +92,9 @@ class LoginView extends React.Component {
 
         return (
             <div className="container login">
-                <h1 className="text-center">Login</h1>
+
                 <div className="login-container margin-top-medium">
+                    <h1 className="h1 text-center">Login</h1>
                     {statusText}
                     <form onSubmit={this.login}>
                         <Form ref={(ref) => { this.loginForm = ref; }}
