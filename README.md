@@ -82,9 +82,8 @@ Initially this platform supports “BIND” backend.`
       }
     });
   ```
-  
-  
-  **Show Record**
+ 
+**Show Record**
 ----
   Returns json data about a Records in a Domain.
 
@@ -157,3 +156,95 @@ Initially this platform supports “BIND” backend.`
       }
     });
   ```
+  
+**Update Record**
+----
+  Update a Records in a Domain.
+
+* **URL**
+
+  api/v1/dashboard/dns/:id/
+
+* **Method:**
+
+  `GET`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+   `id=[integer]`
+
+* **Data Params**
+
+  None
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** `{
+  "id": 26,
+  "domain": "google.com",
+  "zone": "google.com",
+  "ttl": 180,
+  "type": "CNAME",
+  "host": "www",
+  "mx_priority": null,
+  "data": "ghs.google.com.",
+  "primary_ns": null,
+  "resp_person": null,
+  "serial": null,
+  "refresh": null,
+  "retry": null,
+  "expire": null,
+  "minimum": null
+}`
+ 
+* **Error Response:**
+
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** `{
+  "non_field_errors": [
+    "Server Error. Please try again later."
+  ]
+}`
+
+  OR
+
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ error : "You are unauthorized to make this request." }`
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "api/v1/dashboard/dns/26/",
+      dataType: "json",
+      type : "POST",
+      data : {
+              "id": 26,
+              "domain": "google.com",
+              "zone": "google.com",
+              "ttl": 180,
+              "type": "CNAME",
+              "host": "www",
+              "mx_priority": null,
+              "data": "ghs.google.com.",
+              "primary_ns": null,
+              "resp_person": null,
+              "serial": null,
+              "refresh": null,
+              "retry": null,
+              "expire": null,
+              "minimum": null
+              },
+      headers: {
+                Accept: 'application/json',
+                Authorization: `Token ${token}`
+            },
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
